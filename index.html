@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/WeatherappStyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Cursive:wght@400..700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <h1>⛅ Weather App</h1>
+    <br><br>
+    <label style="font-size: 20px;">City Name ➤</label>
+    <input id="input" type="text"><br><br>
+    <button onclick="Click1()">Submit</button>
+    <p id="ptag"></p>
+    <script>
+        async function Click1(){
+            var city = document.getElementById("input").value
+            var apikey = "aa04f3e673473f3730bbf205e3ed4da8"
+            var url = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=aa04f3e673473f3730bbf205e3ed4da8&units=imperial"
+
+            try{
+                var response = await fetch(url);
+                if(!response.ok){
+                    throw new Error("City Not Found")
+                }
+                var data = await response.json()
+                var weatherinfo = `<br><br><br><h2>${data.name}, ${data.sys.country}<br><br> Temperature: ${data.main.temp}℉ <br><br> Weather: ${data.weather[0].main} <br><br> Humidity: ${data.main.humidity}% <br><br> Wind Speed: ${data.wind.speed * 2} mph</h2>`
+                document.getElementById("ptag").innerHTML = weatherinfo
+
+            }
+            catch(error){
+                document.getElementById("ptag").innerHTML = `<p style = "color: red;">${error.message}</p>`
+            }
+
+        }
+
+        
+    </script>
+</body>
+</html
